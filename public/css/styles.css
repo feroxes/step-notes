@@ -1,0 +1,10 @@
+body {
+    background-color: #ffcc00;
+}
+
+
+.block-note-title {
+    color: #2c2c2c;
+    font-size: 30px;
+    text-transform: uppercase;
+}
