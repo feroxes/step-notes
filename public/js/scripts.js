@@ -43,11 +43,91 @@ function addNote() {
 }
 
 function addList() {
-    fetch('http://localhost:8000/addLists').then(response => {
+    fetch('http://localhost:8000/showListModal').then(response => {
+               return response.text()
+        }, networkError => console.log(networkError.message)
+    ).then(test => {
+        let list = document.getElementById('list');
+        list.innerHTML = test;
+    }).then(() => {
+        $('#modalCreatesUser').modal("show")
+    }).then ( () => {
+        listGenerator();
+    }).then(() => {
+        postList();
+    });
+};
 
+function listGenerator(){
+    let listForm = document.getElementById('listForm');
+    let inputCreateList = document.getElementById('inputCreateList');
+    inputCreateList.addEventListener('keyup', createListItem);
 
+    function createListItem(e){
+        if(e.keyCode == 13){
+            let div = document.createElement('div');
+            div.className = 'row';
+            let listItem = document.createElement('li');
+            listItem.className = 'col-sm-11 itemList';
+            listItem.innerHTML = inputCreateList.value;
+            let trash = document.createElement('img');
+
+            trash.src = 'img/trash.png';
+
+            listForm.appendChild(div);
+            div.appendChild(listItem);
+            div.appendChild(trash);
+            inputCreateList.value = '';
+
+            trash.addEventListener('click', removeListItem);
+            function removeListItem(e) {
+                console.dir(e.target);
+                e.target.previousSibling.remove();
+                e.target.remove();
+            }
+        }
+
+    }
+};
+function postList(){
+    let addListBtn = document.getElementById('btn-form-addList');
+
+    addListBtn.addEventListener('click', function(){
+        let listArr = [];
+        let title = document.getElementById('inputCreateTitle').value;
+        let itemList = document.getElementsByClassName('itemList');
+            for(let i = 0; i < itemList.length; i++){
+                let obj = {
+                    status: 'false',
+                    text: itemList[i].innerHTML
+                }
+                listArr.push(obj);
+            }
+        console.log(listArr);
+
+        fetch('http://localhost:8000/postlist', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body:JSON.stringify({
+                type: 'lists',
+                user_id: userName,
+                content: {
+                    title: title,
+                    description: listArr
+                }
+            })
+        }).then(() => {
+            // console.log(res);
+
+            $('#modalCreatesUser').modal('hide');
+            document.getElementById('block_notes').innerText = '';
+            showNotes(userName);
+        })
     })
 }
+
 
 
 let data;
@@ -209,7 +289,7 @@ function showNotes(login) {
                 newListItems.classList.add('block-list-items');
 
                 let i = 0;
-                let desc = elem.content.decsription;
+                let desc = elem.content.description;
 
                 // console.log(desc);
 
@@ -344,6 +424,4 @@ btnAddNote.addEventListener('click', addNote);
 let btnAddList = document.getElementById('btn-add-list');
 
 btnAddList.addEventListener('click', addList);
-
-
 

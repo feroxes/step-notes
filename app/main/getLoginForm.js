@@ -12,4 +12,6 @@ module.exports = function (app) {
         res.render('cancel_login');
     });
 
+
+
 }

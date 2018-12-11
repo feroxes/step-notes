@@ -1,0 +1,21 @@
+div#modalCreatesUser(class="modal fade")
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h4.modal-title Add new list
+            .modal-body
+                form
+                    div(class="form-group row")
+                        label(for="inputCreateTitle" class="col-sm-3 col-form-label center") List title
+                    div(class="form-group row")
+                        .col.sm-2
+                        .col-sm-8
+                            input#inputCreateTitle(type="text" class="form-control" placeholder="Title")
+                        .col-sm-2
+                    div(class="form-group row")
+                        .col-sm-12
+                            input#inputCreateList(type="text" class="form-control" placeholder="add your list")
+                    div#listForm(class="form-group")
+                    div(class="form-group row")
+                        .col-sm-10
+                            div#btn-form-addList(class="btn btn-primary") Add list
