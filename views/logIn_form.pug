@@ -1,0 +1,18 @@
+div#modalLoginUser(class="modal")
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h4.modal-title Please log in
+            .modal-body
+                form
+                    div(class="form-group row")
+                        label(for="inputLogin" class="col-sm-3 col-form-label") Your login
+                        .col-sm-9
+                            input#inputLogin(type="text" class="form-control" placeholder="Login")
+                    div(class="form-group row")
+                        label(for="inputPass" class="col-sm-3 col-form-label") Password
+                        .col-sm-9
+                            input#inputPass(type="password" class="form-control" placeholder="Password")
+                    div(class="form-group row")
+                        .col-sm-9
+                            input#btn-form-login(type="button" class="btn btn-primary" onclick="processLogin()" value="Log in")

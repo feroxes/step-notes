@@ -1,0 +1,18 @@
+div#modalCreateUser(class="modal fade")
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h4.modal-title Choose your login and password
+            .modal-body
+                form
+                    div(class="form-group row")
+                        label(for="inputCreateLogin" class="col-sm-2 col-form-label") Your login
+                        .col-sm-10
+                            input#inputCreateLogin(type="text" class="form-control" placeholder="Login")
+                    div(class="form-group row")
+                        label(for="inputCreatePass" class="col-sm-2 col-form-label") Password
+                        .col-sm-10
+                            input#inputCreatePass(type="password" class="form-control" placeholder="Password")
+                    div(class="form-group row")
+                        .col-sm-10
+                            button#btn-form-login(class="btn btn-primary") Sign Up

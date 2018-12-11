@@ -1,3 +1,6 @@
+let userName = '';
+
+
 function fieldAddUser() {
     fetch('http://localhost:8000/addUser').then(response => {
         response.text().then(function (text) {
@@ -9,7 +12,17 @@ function fieldAddUser() {
 
 
 function funcAddUser() {
-    fetch('http://localhost:8000/api/addUser').then(response => {
+
+console.log('add user func');
+
+    let loginSignup = document.getElementById('inputCreateLogin').value;
+    let passSignup = document.getElementById('inputCreatePass').value;
+
+    let urlAddUser = 'http://localhost:8000/addUser/' + loginSignup + "-" + passSignup;
+
+    console.log(urlAddUser);
+
+    fetch(urlAddUser, {method: 'post'}).then(response => {
         response.text().then(function (text) {
             console.log(text);
             // document.getElementById('allTasks').innerHTML = response.json();
@@ -17,6 +30,8 @@ function funcAddUser() {
         })
     })
 }
+
+
 
 
 
@@ -38,7 +53,121 @@ function addList() {
 let data;
 let arrNL = [];
 
+function showSignup () {
+
+    console.log('show cancel');
+    $('#modalCreateUser').modal("show");
+
+}
+
+
+function showCancelLogin () {
+
+    console.log('show cancel');
+    $('#modalCancelLogin').modal("show");
+
+}
+
+
+// function getCancelLogin() {
+//
+//
+//     fetch('http://localhost:8000/getCancelLoginForm').then(response => {
+//         response.text().then(function (text) {
+//             // document.getElementById('allTasks').innerHTML = response.json();
+//             document.getElementById('blockModalCancelLogin').innerHTML = text;
+//             // btnFormLogin.onclick(hideModal);
+//         })
+//     }).then(resolved => {
+//         // showCancelLogin();
+//         $('#modalCancelLogin').modal("show");
+//     })
+//
+//
+// }
+
+
+function showModalLogin() {
+
+    console.log('show modal window');
+    $('#modalLoginUser').modal("show");
+
+
+}
+
+function hideModalLogin() {
+    $('#modalLoginUser').modal("hide");
+
+}
+
+function processLogin() {
+
+    console.log('hello');
+
+    $('#modalLoginUser').modal("hide");
+
+    checkUser();
+
+}
+
+
+// function getModalLogin() {
+//
+//     // userName = '';
+//
+//     console.log('get form from fetch');
+//
+//     fetch('http://localhost:8000/getLoginForm').then(response => {
+//         response.text().then(function (text) {
+//             // document.getElementById('allTasks').innerHTML = response.json();
+//             document.getElementById('blockModalLogin').innerHTML = text;
+//             // btnFormLogin.onclick(hideModal);
+//         })
+//     }).then(resolved => {
+//
+//         console.log('get form after fetch');
+//         showModalLogin();
+//
+//     })
+//
+//
+// }
+
+
+// function getModalSignup() {
+//
+//     fetch('http://localhost:8000/getSignupForm').then(response => {
+//         response.text().then(function (text) {
+//             // document.getElementById('allTasks').innerHTML = response.json();
+//             document.getElementById('blockModalCreateUser').innerHTML = text;
+//             // btnFormLogin.onclick(hideModal);
+//         })
+//     }).then(() => {
+//         showModal();
+//
+//     })
+//
+//
+// }
+
+
+
+
+
+
+
+
+
+// let btnFormLogin = document.getElementById('btn-form-login');
+
+
+// btnFormLogin.addEventListener('click', hideModal);
+
+
 function showNotes(login) {
+
+    console.log("login - " + login);
+
     fetch('http://localhost:8000/showNotes/' + login).then(response => {
         if (response.ok) {
             console.log(response);
@@ -136,17 +265,23 @@ function showNotes(login) {
 }
 
 
-function checkUser () {
+function checkUser() {
 
-    let inputLogin = document.getElementById('input-login').value;
+    // let inputLogin = document.getElementById('input-login').value;
 
-    let fetchLogin = 'http://localhost:8000/checkUser/' + inputLogin;
+    userName = document.getElementById('inputLogin').value;
 
-    fetch(fetchLogin).then(response => {
+    console.log("userName = " + userName);
+
+    let fetchLogin = 'http://localhost:8000/checkUser/' + userName;
+
+    console.log('fetchLogin = ' + fetchLogin);
+
+    fetch(fetchLogin).then(async response => {
         if (response.ok) {
             console.log(response);
 
-            let arr = response.json();
+            let arr = await response.json();
 
             console.log(arr);
 
@@ -155,18 +290,46 @@ function checkUser () {
     }).then(resolved => {
         data = resolved;
 
-            console.log('login exists');
-        showNotes(inputLogin);
-
-
+        console.log('login exists');
+        showNotes(userName);
 
 
     }, rejected => {
-        console.log('login doesnt exist');
+        console.log('hahaha');
+
+        showCancelLogin();
+
+        // getCancelLogin();
     })
 
 
 }
+
+
+
+let btnModalLogin = document.getElementById('btn-modal-login');
+
+// btnModalLogin.addEventListener('click', getModalLogin);
+
+btnModalLogin.addEventListener('click', showModalLogin);
+
+
+let btnModalLoginClose = document.getElementById('btn-form-login-out');
+
+btnModalLoginClose.addEventListener('click', hideModalLogin);
+
+
+
+let btnModalSignup = document.getElementById('btn-signup-login');
+
+btnModalSignup.addEventListener('click', showSignup);
+
+
+
+let btnModalSignupLogin = document.getElementById('btn-form-signup');
+
+btnModalSignupLogin.addEventListener('click', funcAddUser);
+
 
 
 

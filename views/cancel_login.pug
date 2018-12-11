@@ -1,0 +1,15 @@
+div#modalCancelLogin(class="modal")
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h4.modal-title Incorrect login or password
+            .modal-body
+                form
+                    div(class="form-group") You are dumb sfdsfdsfd
+                    div(class="form-group row")
+                        div(class="col-4")
+                            input#inputCancelLogin(type="button" class="btn btn-primary" onclick="getModalLogin()" value="Log in")
+                        div(class="col-4")
+                            input#inputCancelSignin(type="button" class="btn btn-success" onclick="processLogin()" value="Sign up")
+                        div(class="col-4")
+                            input#inputCancelCancel(type="button" class="btn btn-danger" onclick="processLogin()" value="Log in")

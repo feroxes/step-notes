@@ -5,25 +5,26 @@ module.exports = function (app, db) {
 
      let list = {
          type: "lists",
-         user_id: 3,
+         user_id: "Dmytro",
          content: {
-             title: "new list",
+             title: "My wish list",
              decsription: [
                  {
-                     status: true,
-                     text: "hernya",
+                     status: false,
+                     text: "Ferrari F40",
                      id_desc: 1,
                  },
                  {
                      status: false,
-                     text: "hren",
+                     text: "Ferrari F1",
                      id_desc: 2,
                  },
                  {
                      status: false,
-                     text: "huinya",
+                     text: "Ferrari 458",
                      id_desc: 3,
-                 }
+                 },
+
              ]
          },
          date_creation: someDate,

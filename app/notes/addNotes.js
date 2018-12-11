@@ -7,10 +7,10 @@ module.exports = function (app, db) {
 
         let note = {
             type: "notes",
-            user_id: 3,
+            user_id: "Dmytro",
             content: {
-                title: "forth note",
-                text: "Комуняку на гілляку"
+                title: "second note",
+                text: "I don't like Pug"
             },
             date_creation: someDate,
 
