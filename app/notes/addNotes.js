@@ -9,8 +9,8 @@ module.exports = function (app, db) {
             type: "notes",
             user_id: "Dmytro",
             content: {
-                title: "second note",
-                text: "I don't like Pug"
+                title: "What to Do",
+                text: "Please do something"
             },
             date_creation: someDate,
 

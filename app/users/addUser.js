@@ -6,28 +6,6 @@ module.exports = function (app, db) {
 
     app.use(bodyParser.urlencoded({extended: false}));
 
-
-    // app.get('/addUser', (req, res) => {
-    //
-    //     let filePath = path.resolve(__dirname, "../../", "templates/formAddUser.html");
-    //
-    //     res.setHeader('Content-Type', 'text/html');
-    //     fs.readFile(filePath, (err, data) => {
-    //         res.send(data);
-    //     })
-    //
-    //
-    // });
-
-
-    // app.get('/api/addUser', (req, res) => {
-    //
-    //     res.send(`New user ${req.body.login} was created successfully`);
-    //
-    //
-    // })
-
-
     app.post('/addUser/:login-:password', (req, res) => {
 
 
@@ -44,8 +22,8 @@ module.exports = function (app, db) {
         collection.insertOne(post, (err, result) => {
             if (err) console.log(err);
         });
-        // res.send('ok');
-        // res.redirect('/');
+
+        res.send('Your user was successfully added');
 
     })
 

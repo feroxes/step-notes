@@ -1,5 +1,5 @@
 body {
-    background-color: #ffcc00;
+    background-color: #f5f6f7;
 }
 
 
@@ -7,4 +7,10 @@ body {
     color: #2c2c2c;
     font-size: 30px;
     text-transform: uppercase;
+}
+
+
+.list-item {
+    height: 200px;
+    overflow-y: hidden;
 }

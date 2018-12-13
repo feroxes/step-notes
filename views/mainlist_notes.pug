@@ -1,0 +1,33 @@
+- var arrNotes = arr
+each item in arrNotes
+    case item.type
+        when 'lists'
+            .col-sm-3
+
+                    div(class="card rounded mb-3" id=item.type+"/"+item._id)
+                        div(class="card-body bg-info text-white rounded-top")
+                            h5(class="card-title") #{item.content.title}
+                        ul(class="list-group list-group-flush list-item")
+                            each item_list in item.content.description
+                                - var n = Math.random()* 10000000
+                                li(class='list-group-item bg-light')
+                                    .form-check
+                                        input(
+                                            class="form-check-input"
+                                            type="checkbox"
+                                               id=n
+                                            checked= (item_list.status === "true") ? true : false
+                                            )
+                                        label(class="form-check-label" for=n) #{item_list.text}
+                        .card-body
+                            a(class="card-link" href="http://localhost:8000/"+item.type+"/"+item._id) Details & Edit
+        when 'notes'
+            .col-sm-3
+
+                    div(class="card rounded mb-3" id=item.type+"/"+item._id)
+                        div(class="card-body bg-warning text-dark")
+                            h5.card-title #{item.content.title}
+                        div(class="card-body bg-light")
+                            p(class="card-text list-item") #{item.content.text}
+                        .card-body
+                            a(class="card-link" href="http://localhost:8000/"+item.type+"/"+item._id) Details & Edit

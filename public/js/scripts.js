@@ -22,12 +22,11 @@ console.log('add user func');
 
     console.log(urlAddUser);
 
-    fetch(urlAddUser, {method: 'post'}).then(response => {
-        response.text().then(function (text) {
-            console.log(text);
+    fetch(urlAddUser, {method: 'post'}).then(() => {
+        hideSignup();
+        showSuccessSignup();
             // document.getElementById('allTasks').innerHTML = response.json();
-            document.getElementById('block_add_user').innerHTML = text;
-        })
+
     })
 }
 
@@ -89,6 +88,7 @@ function listGenerator(){
 
     }
 };
+
 function postList(){
     let addListBtn = document.getElementById('btn-form-addList');
 
@@ -135,41 +135,51 @@ let arrNL = [];
 
 function showSignup () {
 
-    console.log('show cancel');
     $('#modalCreateUser').modal("show");
+
+}
+
+
+function hideSignup () {
+
+    $('#modalCreateUser').modal("hide");
+
+}
+
+
+function showSuccessSignup () {
+
+    $('#modalSuccessSignUp').modal("show");
+
+}
+
+
+function hideSuccessSignup () {
+
+    $('#modalSuccessSignUp').modal("hide");
 
 }
 
 
 function showCancelLogin () {
 
-    console.log('show cancel');
     $('#modalCancelLogin').modal("show");
 
 }
 
+function showModalCancelSignup() {
 
-// function getCancelLogin() {
-//
-//
-//     fetch('http://localhost:8000/getCancelLoginForm').then(response => {
-//         response.text().then(function (text) {
-//             // document.getElementById('allTasks').innerHTML = response.json();
-//             document.getElementById('blockModalCancelLogin').innerHTML = text;
-//             // btnFormLogin.onclick(hideModal);
-//         })
-//     }).then(resolved => {
-//         // showCancelLogin();
-//         $('#modalCancelLogin').modal("show");
-//     })
-//
-//
-// }
+    $('#modalCancelSignUp').modal("show");
+}
+
+function hideModalCancelSignup() {
+
+    $('#modalCancelSignUp').modal("hide");
+}
 
 
 function showModalLogin() {
 
-    console.log('show modal window');
     $('#modalLoginUser').modal("show");
 
 
@@ -191,57 +201,8 @@ function processLogin() {
 }
 
 
-// function getModalLogin() {
-//
-//     // userName = '';
-//
-//     console.log('get form from fetch');
-//
-//     fetch('http://localhost:8000/getLoginForm').then(response => {
-//         response.text().then(function (text) {
-//             // document.getElementById('allTasks').innerHTML = response.json();
-//             document.getElementById('blockModalLogin').innerHTML = text;
-//             // btnFormLogin.onclick(hideModal);
-//         })
-//     }).then(resolved => {
-//
-//         console.log('get form after fetch');
-//         showModalLogin();
-//
-//     })
-//
-//
-// }
 
 
-// function getModalSignup() {
-//
-//     fetch('http://localhost:8000/getSignupForm').then(response => {
-//         response.text().then(function (text) {
-//             // document.getElementById('allTasks').innerHTML = response.json();
-//             document.getElementById('blockModalCreateUser').innerHTML = text;
-//             // btnFormLogin.onclick(hideModal);
-//         })
-//     }).then(() => {
-//         showModal();
-//
-//     })
-//
-//
-// }
-
-
-
-
-
-
-
-
-
-// let btnFormLogin = document.getElementById('btn-form-login');
-
-
-// btnFormLogin.addEventListener('click', hideModal);
 
 
 function showNotes(login) {
@@ -249,154 +210,118 @@ function showNotes(login) {
     console.log("login - " + login);
 
     fetch('http://localhost:8000/showNotes/' + login).then(response => {
-        if (response.ok) {
-            console.log(response);
-
-            let arr = response.json();
-
-            console.log(arr);
-
-            return arr;
-        }
-    }).then(resolved => {
-        data = resolved;
-        console.log(data);
-
-        data.forEach(elem => {
-
-            if (elem.type === 'notes') {
-
-                let newNote = document.createElement('div');
-                newNote.classList.add('block-note');
-                let newNoteTitle = document.createElement('h3');
-                newNoteTitle.classList.add('block-note-title');
-                newNoteTitle.innerHTML = elem.content.title;
-                let newNoteText = document.createElement('p');
-                newNoteText.classList.add('block-note-text');
-                newNoteText.innerHTML = elem.content.text;
-                newNote.appendChild(newNoteTitle);
-                newNote.appendChild(newNoteText);
-                document.getElementById('block_notes').appendChild(newNote);
-
-            }
-            else if (elem.type === 'lists') {
-                let newList = document.createElement('div');
-                newList.classList.add('block-list');
-                let newListTitle = document.createElement('h3');
-                newListTitle.classList.add('block-list-title');
-                newListTitle.innerHTML = elem.content.title;
-                let newListItems = document.createElement('ul');
-                newListItems.classList.add('block-list-items');
-
-                let i = 0;
-                let desc = elem.content.description;
-
-                // console.log(desc);
-
-                desc.forEach(item => {
-                    let newListItem = document.createElement('li');
-                    newListItem.classList.add('block-list-item');
-
-                    let newListItemCheckbox = document.createElement('input');
-                    newListItemCheckbox.setAttribute('type', 'checkbox');
-                    newListItemCheckbox.setAttribute('name', 'item' + i);
-                    if (item.status == true) {
-                        let att = document.createAttribute("checked");
-                        newListItemCheckbox.setAttributeNode(att);
-                        // newListItemCheckbox.setAttribute('checked');
-                    }
-
-                    let newListItemLabel = document.createElement('label');
-                    newListItemLabel.setAttribute('for', 'item' + i);
-                    newListItemLabel.innerHTML = item.text;
-
-                    newListItem.appendChild(newListItemCheckbox);
-                    newListItem.appendChild(newListItemLabel);
-
-                    newListItems.appendChild(newListItem);
-
-                    i++;
-
-
-                })
-
-                // let newNoteText = document.createElement('p');
-                // newNoteText.classList.add('block-note-text');
-                // newNoteText.innerHTML = elem.content.text;
-
-
-                newList.appendChild(newListTitle);
-                newList.appendChild(newListItems);
-
-
-                document.getElementById('block_notes').appendChild(newList);
-
-            }
-
-
-            // arrNL.push(elem);
-        });
-
-        console.log(arrNL);
-
-
+        response.text().then(function (text) {
+            // document.getElementById('allTasks').innerHTML = response.json();
+            document.getElementById('block_notes').innerHTML = text;
+        })
+    }).then(() => {
+        addClick();
     })
 
 }
+
+
 
 
 function checkUser() {
-
-    // let inputLogin = document.getElementById('input-login').value;
-
     userName = document.getElementById('inputLogin').value;
 
-    console.log("userName = " + userName);
 
     let fetchLogin = 'http://localhost:8000/checkUser/' + userName;
 
-    console.log('fetchLogin = ' + fetchLogin);
-
     fetch(fetchLogin).then(async response => {
         if (response.ok) {
-            console.log(response);
 
             let arr = await response.json();
-
-            console.log(arr);
 
             return arr;
         }
     }).then(resolved => {
+
+
+
         data = resolved;
 
-        console.log('login exists');
+        document.getElementById('logged-id').innerHTML = userName;
+        $('#block-login-not-logged').toggleClass('d-none');
+        $('#block-login-logged').toggleClass('d-none');
         showNotes(userName);
 
 
+
     }, rejected => {
-        console.log('hahaha');
+
 
         showCancelLogin();
-
-        // getCancelLogin();
     })
 
+}
+
+
+
+function checkSignupUser() {
+
+    let newUserName = document.getElementById('inputCreateLogin').value;
+
+    let fetchLogin = 'http://localhost:8000/checkUser/' + newUserName;
+
+    fetch(fetchLogin).then(async response => {
+        if (response.ok) {
+
+            let arr = await response.json();
+
+            return arr;
+        }
+    }).then(resolved => {
+        hideSignup();
+        showModalCancelSignup();
+
+
+    }, rejected => {
+        funcAddUser();
+        hideSignup();
+    })
 
 }
+
+
+// $('#block_notes').find("#block_notes div .card").each(function (i) {
+//     $('#block_notes div .card').click(function (e) {
+//         console.log(e.target);
+//     });
+// });
+
+function addClick () {
+    // console.log('add');
+    //
+    // $('#block_notes').find("#block_notes div .card").each(function (i) {
+    //     $(this).click(function (e) {
+    //         console.log(e.target);
+    //     });
+    // });
+
+    // $("#block_notes div .card").click(function (e) {
+    //     console.log(e.target);
+    // });
+}
+
+
+
 
 
 
 let btnModalLogin = document.getElementById('btn-modal-login');
 
-// btnModalLogin.addEventListener('click', getModalLogin);
-
 btnModalLogin.addEventListener('click', showModalLogin);
 
+let btnFormLogin = document.getElementById('btn-form-login');
 
-let btnModalLoginClose = document.getElementById('btn-form-login-out');
+btnFormLogin.addEventListener('click', processLogin);
+
+let btnModalLoginClose = document.getElementById('btn-form-login-cancel');
 
 btnModalLoginClose.addEventListener('click', hideModalLogin);
+
 
 
 
@@ -405,17 +330,28 @@ let btnModalSignup = document.getElementById('btn-signup-login');
 btnModalSignup.addEventListener('click', showSignup);
 
 
-
 let btnModalSignupLogin = document.getElementById('btn-form-signup');
 
-btnModalSignupLogin.addEventListener('click', funcAddUser);
+btnModalSignupLogin.addEventListener('click', checkSignupUser);
+
+let btnModalSignupClose = document.getElementById('btn-form-signup-close');
+
+btnModalSignupClose.addEventListener('click', hideSignup);
 
 
 
 
-let btnLogin = document.getElementById('btn-login');
 
-btnLogin.addEventListener('click', checkUser);
+
+let btnLogOut = document.getElementById('btn-log-out');
+
+// btnLogOut.addEventListener('click', addList);
+
+
+
+
+
+
 
 let btnAddNote = document.getElementById('btn-add-note');
 
@@ -424,4 +360,7 @@ btnAddNote.addEventListener('click', addNote);
 let btnAddList = document.getElementById('btn-add-list');
 
 btnAddList.addEventListener('click', addList);
+
+
+
 
