@@ -2,25 +2,29 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 module.exports = function (app, db) {
 
     app.use(bodyParser.urlencoded({extended: false}));
 
-    app.post('/addUser/:login-:password', (req, res) => {
+    app.post('/addUser', (req, res) => {
 
-
+        let newPass = '';
         console.log(req.params);
 
-        console.log('Login = ' + req.params.login + ', Password = ' + req.params.password);
+        bcrypt.hash(req.body.password, saltRounds, function (err,   hash) {
+            console.log('Login = ' + req.body.login + ', Password = ' + hash);
+            let post = {
+                login: req.body.login,
+                password: hash,
+            };
 
-        let post = {
-            login: req.params.login,
-            password: req.params.password,
-        };
-
-        let collection = db.collection('users');
-        collection.insertOne(post, (err, result) => {
-            if (err) console.log(err);
+            let collection = db.collection('users');
+            collection.insertOne(post, (err, result) => {
+                if (err) console.log(err);
+            });
         });
 
         res.send('Your user was successfully added');

@@ -3,6 +3,7 @@ const showListModal = require('./app/lists/showListModal');
 const postList = require ('./app/lists/postList')
 
 const checkUser = require('./app/users/checkUser');
+const checkUserData = require('./app/users/checkUserData');
 const addNewUser = require('./app/users/addUser');
 
 
@@ -22,6 +23,7 @@ module.exports = function (app, db) {
     postList(app, db);
 
     checkUser(app, db);
+    checkUserData(app, db);
     addNewUser(app, db);
 
     showNotes(app, db);

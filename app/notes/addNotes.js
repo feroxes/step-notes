@@ -7,7 +7,7 @@ module.exports = function (app, db) {
 
         let note = {
             type: "notes",
-            user_id: "Dmytro",
+            user_id: "user1",
             content: {
                 title: "What to Do",
                 text: "Please do something"

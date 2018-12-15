@@ -2,7 +2,7 @@
 each item in arrNotes
     case item.type
         when 'lists'
-            .col-sm-3
+            div(class = item.type + "-item card-item col-sm-3")
 
                     div(class="card rounded mb-3" id=item.type+"/"+item._id)
                         div(class="card-body bg-info text-white rounded-top")
@@ -22,7 +22,7 @@ each item in arrNotes
                         .card-body
                             a(class="card-link" href="http://localhost:8000/"+item.type+"/"+item._id) Details & Edit
         when 'notes'
-            .col-sm-3
+            div(class = item.type + "-item card-item col-sm-3")
 
                     div(class="card rounded mb-3" id=item.type+"/"+item._id)
                         div(class="card-body bg-warning text-dark")
