@@ -1,6 +1,8 @@
 const addNewNote = require('./app/notes/addNotes');
 const showListModal = require('./app/lists/showListModal');
-const postList = require ('./app/lists/postList')
+const postList = require ('./app/lists/postList');
+const showListDetails = require('./app/lists/showListDetails');
+const putEditList = require('./app/lists/putEditList')
 
 const checkUser = require('./app/users/checkUser');
 const checkUserData = require('./app/users/checkUserData');
@@ -21,6 +23,8 @@ module.exports = function (app, db) {
     addNewNote(app, db);
     showListModal(app, db);
     postList(app, db);
+    showListDetails(app, db);
+    putEditList(app, db);
 
     checkUser(app, db);
     checkUserData(app, db);
