@@ -16,7 +16,7 @@ each item in arrNotes
                                             class="form-check-input"
                                             type="checkbox"
                                                id=n
-                                            checked= (item_list.status == "true") ? true : false
+                                            checked= item_list.status
                                             )
                                         label(class="form-check-label" for=n) #{item_list.text}
                         .card-body
