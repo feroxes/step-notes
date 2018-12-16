@@ -1,0 +1,23 @@
+- var listObj = result;
+div#modalListDetails(class="modal fade")
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h4(class ="modal-title") #{listObj.content.title}
+            .modal-body
+                form#listForm
+                    each item in listObj.content.description
+                        div(class="form-group row list-row")
+                            .col.sm-2
+                                input(type="checkbox" class="checkbox" checked= (item.status === "true") ? true : false )
+                            .col-sm-6
+                                li(class="edit-list-item") #{item.text}
+                                input(type="text" class="input-list-item d-none")
+                            .col-sm-2
+                                img(src="img/edit.png" class="edit")
+                            .col-sm-2
+                                img(src="img/trash.png" class="trash")
+                    div(class="form-group row")
+                        .col-sm-10
+                            div#btn-form-saveList(class="btn btn-primary") Save list
+                            div#btn-form-cancel(class="btn btn-primary") Cancel

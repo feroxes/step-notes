@@ -63,9 +63,6 @@ function funcAddUser() {
 }
 
 
-
-
-
 function addNote() {
     fetch('http://localhost:8000/addNotes').then(response => {
 
@@ -77,11 +74,11 @@ function addList() {
     fetch('http://localhost:8000/showListModal').then(response => {
             return response.text()
         }, networkError => console.log(networkError.message)
-    ).then(test => {
+    ).then(text => {
         let list = document.getElementById('list');
-        list.innerHTML = test;
+        list.innerHTML = text;
     }).then(() => {
-        $('#modalCreatesUser').modal("show")
+        $('#modalCreateList').modal("show")
     }).then(() => {
         listGenerator();
     }).then(() => {
@@ -111,16 +108,16 @@ function listGenerator() {
             inputCreateList.value = '';
 
             trash.addEventListener('click', removeListItem);
-
-            function removeListItem(e) {
-                console.dir(e.target);
-                e.target.previousSibling.remove();
-                e.target.remove();
-            }
+        }
+        function removeListItem(e) {
+            console.dir(e.target);
+            e.target.parentElement.remove();
+            e.target.remove();
         }
 
     }
 };
+
 
 function postList() {
     let addListBtn = document.getElementById('btn-form-addList');
@@ -136,8 +133,6 @@ function postList() {
             }
             listArr.push(obj);
         }
-        console.log(listArr);
-
         fetch('http://localhost:8000/postlist', {
             headers: {
                 'Content-Type': 'application/json'
@@ -152,16 +147,12 @@ function postList() {
                 }
             })
         }).then(() => {
-            // console.log(res);
-
-            $('#modalCreatesUser').modal('hide');
+            $('#modalCreateList').modal('hide');
             document.getElementById('block_notes').innerText = '';
             showNotes(userName);
         })
     })
 }
-
-
 
 let data;
 let arrNL = [];
@@ -237,25 +228,106 @@ function processLogin() {
 }
 
 
-
-
-
-
 function showNotes(login) {
 
     console.log("login - " + login);
 
     fetch('http://localhost:8000/showNotes/' + login).then(response => {
-        return response.text()}).then(function (text) {
-            // document.getElementById('allTasks').innerHTML = response.json();
-            document.getElementById('block_notes').innerHTML = text;
-        }).then(resolved => {
-            console.log('hi add click');
+        return response.text()
+    }).then(function (text) {
+        // document.getElementById('allTasks').innerHTML = response.json();
+        document.getElementById('block_notes').innerHTML = text;
+    }).then(() => {
+        listDetails();
+    })
+}
+let globalListId;
+function listDetails() {
+    $(".card-list").each(function (i) {
+        $(".card-list:eq(" + i + ")").click(function () {
+            globalListId = this.id;
+            showListDetails(globalListId);
+        });
+    });
+};
 
+function showListDetails(value) {
+    fetch('http://localhost:8000/'+value).then(response => {
+            return response.text()
+        }, networkError => console.log(networkError.message)
+    ).then(text => {
+        let list = document.getElementById('list');
+        list.innerHTML = text;
+    }).then(() => {
+        $('#modalListDetails').modal("show");
+    }).then(() => {
+        editList();
+    }).then(()=>{
+        putList();
+    });
+}
+function editList(){
+    let trash = document.querySelectorAll('.trash');
+    trash.forEach((item)=> {
+        item.addEventListener('click', removeListItem);
+    });
+    function removeListItem(e){
+        this.parentElement.parentElement.remove();
+    }
+    const editBtn = document.querySelectorAll('.edit');
+    editBtn.forEach((item) => {
+        item.addEventListener('click', editListItem)
     })
 
-}
+    function editListItem(e){
+        let listLi = e.target.parentElement.parentElement.children[1].children[0];
+        let listInput = e.target.parentElement.parentElement.children[1].children[1];
+        let data;
+        listInput.classList.toggle('d-none');
+        data = listInput.value;
+        listLi.innerHTML = data;
+        listLi.classList.toggle('d-none');
+    }
 
+    const cancelBtn = document.getElementById('btn-form-cancel');
+    cancelBtn.addEventListener('click', ()=> {
+        $('#modalListDetails').modal('hide');
+    })
+}
+function putList(){
+    let saveListBtn = document.getElementById('btn-form-saveList');
+    saveListBtn.addEventListener('click', saveNewData);
+
+    function saveNewData(e) {
+        let listArr = [];
+        let listForm = document.getElementsByClassName('edit-list-item');
+        let checkbox = document.getElementsByClassName('checkbox');
+
+        for (let i = 0; i < listForm.length; i++) {
+            let obj = {
+                status: checkbox[i].checked,
+                text: listForm[i].innerHTML
+            }
+            listArr.push(obj);
+        }
+        console.log(listArr);
+        console.log(globalListId);
+        fetch('http://localhost:8000/lists/edit', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify({
+                _id: globalListId,
+                content: listArr
+            })
+        }).then(() => {
+            $('#modalListDetails').modal('hide');
+            document.getElementById('block_notes').innerText = '';
+            showNotes(userName);
+        })
+    }
+}
 
 function checkUser() {
 
@@ -337,7 +409,6 @@ function checkSignupUser() {
 }
 
 
-
 let btnModalLogin = document.getElementById('btn-modal-login');
 
 // btnModalLogin.addEventListener('click', getModalLogin);
@@ -353,11 +424,9 @@ let btnModalLoginClose = document.getElementById('btn-form-login-cancel');
 btnModalLoginClose.addEventListener('click', hideModalLogin);
 
 
-
 let btnModalSignup = document.getElementById('btn-signup-login');
 
 btnModalSignup.addEventListener('click', showSignup);
-
 
 
 let btnModalSignupLogin = document.getElementById('btn-form-signup');
@@ -402,8 +471,8 @@ let btnShowAll = document.getElementById('btn-show-all');
 btnShowAll.addEventListener('click', function () {
 
 
-        $('.card-item').show();
-        return false;
+    $('.card-item').show();
+    return false;
 
 });
 
@@ -412,10 +481,10 @@ let btnShowNotes = document.getElementById('btn-show-notes');
 
 btnShowNotes.addEventListener('click', function () {
 
-        console.log('hi notes');
-        $('.card-item').hide();
-        $('.notes-item').show();
-        return false;
+    console.log('hi notes');
+    $('.card-item').hide();
+    $('.notes-item').show();
+    return false;
 
 });
 
@@ -423,10 +492,10 @@ let btnShowLists = document.getElementById('btn-show-lists');
 
 btnShowLists.addEventListener('click', function () {
 
-        console.log('hi lists');
-        $('.card-item').hide();
-        $('.lists-item').show();
-        return false;
+    console.log('hi lists');
+    $('.card-item').hide();
+    $('.lists-item').show();
+    return false;
 
 });
 
