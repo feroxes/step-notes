@@ -118,7 +118,6 @@ function listGenerator() {
     }
 };
 
-
 function postList() {
     let addListBtn = document.getElementById('btn-form-addList');
 
@@ -128,7 +127,7 @@ function postList() {
         let itemList = document.getElementsByClassName('itemList');
         for (let i = 0; i < itemList.length; i++) {
             let obj = {
-                status: 'false',
+                status: false,
                 text: itemList[i].innerHTML
             }
             listArr.push(obj);
@@ -264,6 +263,8 @@ function showListDetails(value) {
         editList();
     }).then(()=>{
         putList();
+    }).then(()=>{
+        deleteList();
     });
 }
 function editList(){
@@ -310,8 +311,9 @@ function putList(){
             }
             listArr.push(obj);
         }
-        console.log(listArr);
-        console.log(globalListId);
+        if(listArr.length == 0){
+            sacrificeList();
+        }
         fetch('http://localhost:8000/lists/edit', {
             headers: {
                 'Content-Type': 'application/json'
@@ -327,6 +329,26 @@ function putList(){
             showNotes(userName);
         })
     }
+}
+
+function deleteList(){
+    const deleteBtn = document.getElementById('btn-form-delete');
+    deleteBtn.addEventListener('click', sacrificeList);
+}
+function sacrificeList(){
+    fetch('http://localhost:8000/lists/delete', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'DELETE',
+        body: JSON.stringify({
+            _id: globalListId
+        })
+    }).then(() => {
+        $('#modalListDetails').modal('hide');
+        document.getElementById('block_notes').innerText = '';
+        showNotes(userName);
+    })
 }
 
 function checkUser() {
