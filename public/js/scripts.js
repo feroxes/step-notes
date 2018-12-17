@@ -69,6 +69,7 @@ function addNote() {
         }, networkError => console.log(networkError.message)
     ).then(text => {
         let note = document.getElementById('note');
+        console.log(document.getElementById('note'));
         note.innerHTML = text;
     }).then(() => {
         $('#modalCreateNote').modal("show")
