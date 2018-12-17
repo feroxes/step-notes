@@ -11,6 +11,10 @@ body {
 
 
 .list-item {
-    height: 200px;
+    max-height: 200px;
     overflow-y: hidden;
+}
+
+.card {
+    cursor: pointer;
 }

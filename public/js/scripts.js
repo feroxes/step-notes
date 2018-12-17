@@ -476,7 +476,32 @@ btnAddList.addEventListener('click', addList);
 
 let inputCancelLogin = document.getElementById('inputCancelLogin');
 
-inputCancelLogin.addEventListener('click', addList);
+inputCancelLogin.addEventListener('click', function () {
+    $('#modalCancelLogin').modal('hide');
+    $('#modalLoginUser').modal('show');
+
+});
+
+let inputCancelSignin = document.getElementById('inputCancelSignin');
+
+inputCancelSignin.addEventListener('click', function () {
+    $('#modalCancelLogin').modal('hide');
+    $('#modalCreateUser').modal('show');
+});
+
+let inputCancelCancel = document.getElementById('inputCancelCancel');
+
+inputCancelCancel.addEventListener('click', function () {
+    $('#modalCancelLogin').modal('hide');
+
+});
+
+
+
+
+
+
+
 
 
 $(".nav li").each(function (i) {
