@@ -93,18 +93,23 @@ function listGenerator() {
 
     function createListItem(e) {
         if (e.keyCode == 13) {
+            let row = document.createElement('div');
+            row.className = 'row';
             let div = document.createElement('div');
-            div.className = 'row';
+            div.className = 'col-md-1';
             let listItem = document.createElement('li');
-            listItem.className = 'col-sm-11 itemList';
+            listItem.className = 'col-sm-10 itemList list-group-item';
             listItem.innerHTML = inputCreateList.value;
+
             let trash = document.createElement('img');
 
             trash.src = 'img/trash.png';
+            trash.classList.add('trash-list');
 
-            listForm.appendChild(div);
-            div.appendChild(listItem);
-            div.appendChild(trash);
+            listForm.appendChild(row);
+            row.appendChild(div);
+            row.appendChild(listItem);
+            row.appendChild(trash);
             inputCreateList.value = '';
 
             trash.addEventListener('click', removeListItem);
@@ -268,14 +273,14 @@ function showListDetails(value) {
     });
 }
 function editList(){
-    let trash = document.querySelectorAll('.trash');
+    let trash = document.querySelectorAll('.trash-list');
     trash.forEach((item)=> {
         item.addEventListener('click', removeListItem);
     });
-    function removeListItem(e){
+    function removeListItem(){
         this.parentElement.parentElement.remove();
     }
-    const editBtn = document.querySelectorAll('.edit');
+    const editBtn = document.querySelectorAll('.edit-list');
     editBtn.forEach((item) => {
         item.addEventListener('click', editListItem)
     })
@@ -286,8 +291,14 @@ function editList(){
         let data;
         listInput.classList.toggle('d-none');
         data = listInput.value;
+        console.dir(this);
         listLi.innerHTML = data;
         listLi.classList.toggle('d-none');
+        if(this.src == 'http://localhost:8000/img/edit.png'){
+            this.src = 'http://localhost:8000/img/check.png';
+        }else(
+            this.src = 'http://localhost:8000/img/edit.png'
+        )
     }
 
     const cancelBtn = document.getElementById('btn-form-cancel');
