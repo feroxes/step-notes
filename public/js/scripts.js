@@ -64,11 +64,130 @@ function funcAddUser() {
 
 
 function addNote() {
-    fetch('http://localhost:8000/addNotes').then(response => {
+    fetch('http://localhost:8000/showNoteModal').then(response => {
+            return response.text()
+        }, networkError => console.log(networkError.message)
+    ).then(text => {
+        let note = document.getElementById('note');
+        note.innerHTML = text;
+    }).then(() => {
+        $('#modalCreateNote').modal("show")
+    }).then(() => {
+        postNote();
+    });
+}
 
+function postNote() {
+    let addNoteBtn = document.getElementById('btn-form-addNote');
 
+    addNoteBtn.addEventListener('click', function () {
+        let title = document.getElementById('inputCreateTitleNote').value;
+        let text = document.getElementById('inputCreateNote').value;
+
+        fetch('http://localhost:8000/postNote', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                type: 'notes',
+                user_id: userName,
+                content: {
+                    title: title,
+                    text: text,
+                }
+            })
+        }).then(() => {
+            $('#modalCreateNote').modal('hide');
+            document.getElementById('block_notes').innerText = '';
+            showNotes(userName);
+        })
     })
 }
+
+
+let globalNoteId;
+
+function noteDetails() {
+    $(".card-note").each(function (i) {
+        $(".card-note:eq(" + i + ")").click(function () {
+            globalNoteId = this.id;
+            showNoteDetails(globalNoteId);
+        });
+    });
+}
+
+function showNoteDetails(value) {
+    fetch('http://localhost:8000/' + value).then(response => {
+            return response.text()
+        }, networkError => console.log(networkError.message)
+    ).then(text => {
+        let note = document.getElementById('note');
+        note.innerHTML = text;
+    }).then(() => {
+        $('#modalNoteDetails').modal("show");
+    }).then(() => {
+        putNote();
+    }).then(() => {
+        deleteNote();
+    });
+}
+
+
+function putNote() {
+    let saveNoteBtn = document.getElementById('btn-form-saveNote');
+    saveNoteBtn.addEventListener('click', saveNewNote);
+
+    function saveNewNote(e) {
+        let editNoteTitle = document.getElementById('edit-note-title').value;
+        let editNoteText = document.getElementById('edit-note-text').value;
+
+        fetch('http://localhost:8000/notes/edit', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify({
+                _id: globalNoteId,
+                content: {
+                    title: editNoteTitle,
+                    text: editNoteText
+                }
+            })
+        }).then(() => {
+            $('#modalNoteDetails').modal('hide');
+            document.getElementById('block_notes').innerText = '';
+            showNotes(userName);
+        })
+    }
+}
+
+function deleteNote() {
+    const deleteBtn = document.getElementById('btn-form-delete');
+    deleteBtn.addEventListener('click', sacrificeNote);
+
+    function sacrificeNote() {
+        fetch('http://localhost:8000/notes/delete', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'DELETE',
+            body: JSON.stringify({
+                _id: globalNoteId
+            })
+        }).then(() => {
+            $('#modalNoteDetails').modal('hide');
+            document.getElementById('block_notes').innerText = '';
+            showNotes(userName);
+        })
+    }
+}
+
+
+
+
+
+
 
 function addList() {
     fetch('http://localhost:8000/showListModal').then(response => {
@@ -109,6 +228,7 @@ function listGenerator() {
 
             trash.addEventListener('click', removeListItem);
         }
+
         function removeListItem(e) {
             console.dir(e.target);
             e.target.parentElement.remove();
@@ -238,9 +358,12 @@ function showNotes(login) {
         document.getElementById('block_notes').innerHTML = text;
     }).then(() => {
         listDetails();
+        noteDetails();
     })
 }
+
 let globalListId;
+
 function listDetails() {
     $(".card-list").each(function (i) {
         $(".card-list:eq(" + i + ")").click(function () {
@@ -251,7 +374,7 @@ function listDetails() {
 };
 
 function showListDetails(value) {
-    fetch('http://localhost:8000/'+value).then(response => {
+    fetch('http://localhost:8000/' + value).then(response => {
             return response.text()
         }, networkError => console.log(networkError.message)
     ).then(text => {
@@ -261,26 +384,29 @@ function showListDetails(value) {
         $('#modalListDetails').modal("show");
     }).then(() => {
         editList();
-    }).then(()=>{
+    }).then(() => {
         putList();
-    }).then(()=>{
+    }).then(() => {
         deleteList();
     });
 }
-function editList(){
+
+function editList() {
     let trash = document.querySelectorAll('.trash');
-    trash.forEach((item)=> {
+    trash.forEach((item) => {
         item.addEventListener('click', removeListItem);
     });
-    function removeListItem(e){
+
+    function removeListItem(e) {
         this.parentElement.parentElement.remove();
     }
+
     const editBtn = document.querySelectorAll('.edit');
     editBtn.forEach((item) => {
         item.addEventListener('click', editListItem)
     })
 
-    function editListItem(e){
+    function editListItem(e) {
         let listLi = e.target.parentElement.parentElement.children[1].children[0];
         let listInput = e.target.parentElement.parentElement.children[1].children[1];
         let data;
@@ -291,11 +417,12 @@ function editList(){
     }
 
     const cancelBtn = document.getElementById('btn-form-cancel');
-    cancelBtn.addEventListener('click', ()=> {
+    cancelBtn.addEventListener('click', () => {
         $('#modalListDetails').modal('hide');
     })
 }
-function putList(){
+
+function putList() {
     let saveListBtn = document.getElementById('btn-form-saveList');
     saveListBtn.addEventListener('click', saveNewData);
 
@@ -311,7 +438,7 @@ function putList(){
             }
             listArr.push(obj);
         }
-        if(listArr.length == 0){
+        if (listArr.length == 0) {
             sacrificeList();
         }
         fetch('http://localhost:8000/lists/edit', {
@@ -331,11 +458,12 @@ function putList(){
     }
 }
 
-function deleteList(){
+function deleteList() {
     const deleteBtn = document.getElementById('btn-form-delete');
     deleteBtn.addEventListener('click', sacrificeList);
 }
-function sacrificeList(){
+
+function sacrificeList() {
     fetch('http://localhost:8000/lists/delete', {
         headers: {
             'Content-Type': 'application/json'

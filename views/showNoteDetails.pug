@@ -1,0 +1,23 @@
+- var NoteObj = result;
+div#modalNoteDetails(class="modal fade")
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h4(class ="modal-title") Edit Note
+            .modal-body
+                form#NoteForm
+                    div(class="form-group row note-row")
+                        .col-sm-12
+                            div Title
+                            input#edit-note-title(type="text" required='' value=NoteObj.content.title)
+                    div(class='form-group row note-row')
+                        .col-sm-12
+                            div Text
+                            //textarea#edit-note-text(cols=40 rows=5 required='' value=NoteObj.text)
+                            input#edit-note-text(type=text required='' value=NoteObj.content.text)
+                    div(class="form-group row")
+                        .col-sm-10
+                            div#btn-form-saveNote(class="btn btn-primary") Save note
+                            div#btn-form-delete(class="btn btn-danger") Delete
+
+
