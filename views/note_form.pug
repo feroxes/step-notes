@@ -1,0 +1,18 @@
+div#modalCreateNote(class="modal fade")
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h4.modal-title Add new note
+            .modal-body
+                form
+                    div(class="form-group row")
+                        .col.sm-12
+                            input#inputCreateTitleNote(type="text" required='' class="form-control" placeholder="Title")
+                        .col-sm-12
+                    div(class="form-group row")
+                        .col-sm-12
+                            textarea#inputCreateNote(cols=40 rows=5 required='' class="form-control" placeholder="Add your note")
+                    div#noteForm(class="form-group")
+                    div(class="form-group row")
+                        .col-sm-12
+                            div#btn-form-addNote(class="btn btn-primary") Add note

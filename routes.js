@@ -1,4 +1,9 @@
-const addNewNote = require('./app/notes/addNotes');
+const showNoteModal = require('./app/notes/showNoteModal');
+const postNote = require ('./app/notes/postNote');
+const showNoteDetails = require('./app/notes/showNoteDetails');
+const putEditNote = require('./app/notes/putEditNote');
+const deleteNote = require('./app/notes/deleteNote');
+
 const showListModal = require('./app/lists/showListModal');
 const postList = require ('./app/lists/postList');
 const showListDetails = require('./app/lists/showListDetails');
@@ -21,7 +26,13 @@ const showNotes = require('./app/main/showNotes');
 
 module.exports = function (app, db) {
     openIndex(app, db);
-    addNewNote(app, db);
+
+    showNoteModal(app, db);
+    postNote(app, db);
+    showNoteDetails(app, db);
+    putEditNote(app, db);
+    deleteNote(app, db);
+
     showListModal(app, db);
     postList(app, db);
     showListDetails(app, db);
@@ -35,4 +46,4 @@ module.exports = function (app, db) {
     showNotes(app, db);
     // getLoginForm(app);
 
-}
+};
