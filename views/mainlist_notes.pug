@@ -41,10 +41,10 @@ each item in arrNotes
         when 'notes'
             div(class = item.type + "-item card-item col-12 col-md-6 col-lg-3")
 
-                    div(class="card rounded mb-3" id=item.type+"/"+item._id)
+                    div(class="card rounded mb-3 card-note" id=item.type+"/"+item._id)
                         div(class="card-body bg-warning text-dark")
                             h5.card-title #{item.content.title}
                         div(class="card-body bg-light")
                             p(class="card-text list-item") #{item.content.text}
                         .card-body
-                            a(class="card-link" id=item._id  href="http://localhost:8000/"+item.type+"/"+item._id) Details & Edit
+                            a(class="card-link" id=item._id  href='#') Details & Edit
