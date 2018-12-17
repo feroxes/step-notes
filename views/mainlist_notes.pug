@@ -2,27 +2,44 @@
 each item in arrNotes
     case item.type
         when 'lists'
-            div(class = item.type + "-item card-item col-sm-3")
+            div(class = item.type + "-item card-item col-12 col-md-6 col-lg-3")
 
                     div(class="card rounded mb-3 card-list" id=item.type+"/"+item._id)
                         div(class="card-body bg-info text-white rounded-top")
                             h5(class="card-title") #{item.content.title}
                         ul(class="list-group list-group-flush list-item")
-                            each item_list in item.content.description
-                                - var n = Math.random()* 10000000
-                                li(class='list-group-item bg-light')
-                                    .form-check
-                                        input(
-                                            class="form-check-input"
-                                            type="checkbox"
-                                               id=n
-                                            checked= item_list.status
-                                            )
-                                        label(class="form-check-label" for=n) #{item_list.text}
+                            - var count = 0;
+                            - var len = item.content.description.length;
+                            case len < 5
+                                when true
+                                    while count < len
+                                        li(class='list-group-item bg-light')
+                                            .form-check
+                                                input(
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                id=n
+                                                checked= item.content.description[count].status
+                                                )
+                                                label(class="form-check-label" for=n) #{item.content.description[count].text}
+                                        - count++
+                                when false
+                                    while count < 3
+                                        li(class='list-group-item bg-light')
+                                            .form-check
+                                                input(
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                id=n
+                                                checked= item.content.description[count].status
+                                                )
+                                                label(class="form-check-label" for=n) #{item.content.description[count].text}
+                                        - count++
+                                    li(class='list-group-item bg-light') ...
                         .card-body
                             a(class="card-link" id=item._id href='#') Details & Edit
         when 'notes'
-            div(class = item.type + "-item card-item col-sm-3")
+            div(class = item.type + "-item card-item col-12 col-md-6 col-lg-3")
 
                     div(class="card rounded mb-3 card-note" id=item.type+"/"+item._id)
                         div(class="card-body bg-warning text-dark")

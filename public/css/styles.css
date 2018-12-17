@@ -11,7 +11,7 @@ body {
 
 
 .list-item {
-    height: 200px;
+    max-height: 200px;
     overflow-y: hidden;
 }
 .edit-list-item {
@@ -38,4 +38,8 @@ body {
 .list-btn-red:hover{
     background-color: #FF0000;
     border-color: #DF0101;
+}
+
+.card {
+    cursor: pointer;
 }
