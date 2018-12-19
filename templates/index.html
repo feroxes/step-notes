@@ -15,25 +15,56 @@
 <div class="container">
 
     <div class="block-login pt-3">
-        <div class="row align-items-center" id="block-login-not-logged">
-            <div class="col-sm-8 h3">
+        <div id="block-login-not-logged">
+            <div class="d-flex justify-content-center h3 mb-2">
                 Hello! You are not logged. Please Log In or Sign Up
             </div>
-            <div class="col-sm-2">
-                <button class="btn btn-primary" id="btn-modal-login">Log In</button>
+            <div class="d-flex row justify-content-center mb-2">
+
+                    <button class="btn btn-primary btn-lg mr-2" id="btn-modal-login">Log In</button>
+
+
+                    <button class="btn btn-secondary btn-lg" id="btn-signup-login">Sign Up</button>
+
             </div>
-            <div class="col-sm-2">
-                <button class="btn btn-secondary" id="btn-signup-login">Sign Up</button>
-            </div>
+
         </div>
 
-        <div class="row d-none align-items-center" id="block-login-logged">
-            <div class="col-sm-10 h3">
-                Hello! You are logged as <span class="font-weight-bold" id="logged-id"></span>
+        <div class="d-none" id="block-login-logged">
+            <div class="d-flex justify-content-center h3 mb-2">
+                <span>Hello! You are logged as&nbsp;</span><span class="font-weight-bold" id="logged-id"></span>
             </div>
-            <div class="col-sm-2">
-                <button class="btn btn-danger" id="btn-log-out">Log Out</button>
+            <div class="d-flex justify-content-center mb-2">
+
+                    <button class="btn btn-danger btn-lg" id="btn-log-out">Log Out</button>
+
+
             </div>
+
+            <div class="d-flex row justify-content-center mb-2">
+
+                    <input class="btn bg-info btn-lg mr-2" type="button" value="Add Note" id="btn-add-note">
+
+
+                    <input class="btn bg-warning btn-lg" type="button" value="Add List" id="btn-add-list">
+            </div>
+
+            <div class="block_filter mb-2">
+
+                <ul class="nav nav-pills justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="" id="btn-show-all">ALL</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" id="btn-show-notes">NOTES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" id="btn-show-lists">LISTS</a>
+                    </li>
+                </ul>
+            </div>
+
+
         </div>
 
 
@@ -80,11 +111,11 @@
                             <div class="form-group row"><label class="col-sm-3 col-form-label" for="inputCreateLogin">Your
                                 login</label>
                                 <div class="col-sm-9"><input class="form-control" id="inputCreateLogin" type="text"
-                                                              placeholder="Login" name="inputCreateLogin"/></div>
+                                                             placeholder="Login" name="inputCreateLogin"/></div>
                             </div>
                             <div class="form-group row"><label class="col-sm-3 col-form-label" for="inputCreatePass">Password</label>
                                 <div class="col-sm-9"><input class="form-control" id="inputCreatePass" type="password"
-                                                              placeholder="Password" name="inputCreatePass"/></div>
+                                                             placeholder="Password" name="inputCreatePass"/></div>
                             </div>
                             <div class="form-group row">
 
@@ -93,7 +124,8 @@
                                     <input type="button" class="btn btn-primary" id="btn-form-signup" value="Sign Up">
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="button" class="btn btn-danger" id="btn-form-signup-close" value="Cancel">
+                                    <input type="button" class="btn btn-danger" id="btn-form-signup-close"
+                                           value="Cancel">
                                 </div>
                             </div>
                         </form>
@@ -157,9 +189,11 @@
                         <form>
                             <div class="form-group">Please back or cancel</div>
                             <div class="form-group row">
-                                <div class="col-4"><input class="btn btn-primary" id="inputCancelSignupBack" type="button"
+                                <div class="col-4"><input class="btn btn-primary" id="inputCancelSignupBack"
+                                                          type="button"
                                                           onclick="" value="Back to Sign Up"/></div>
-                                <div class="col-4"><input class="btn btn-danger" id="inputCancelSignupCancel" type="button"
+                                <div class="col-4"><input class="btn btn-danger" id="inputCancelSignupCancel"
+                                                          type="button"
                                                           onclick="" value="Cancel"/></div>
                             </div>
                         </form>
@@ -175,40 +209,11 @@
 </div>
 
 
-
-
-
-
-
-
-<div class="block_add">
-    <input type="button" value="Add Note" id="btn-add-note">
-
-    <input type="button" value="Add List" id="btn-add-list">
-</div>
-
-<div class="block_filter">
-
-    <ul class="nav nav-pills justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link active" href="" id="btn-show-all">ALL</a>
-        </li>
-        <li class="nav-item" >
-            <a class="nav-link" href="" id="btn-show-notes">NOTES</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="" id="btn-show-lists">LISTS</a>
-        </li>
-    </ul>
-</div>
-
 <div id="note"></div>
 
 <div id="list"></div>
 
 <div class="d-flex flex-wrap" id="block_notes"></div>
-
-
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
