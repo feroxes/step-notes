@@ -530,7 +530,7 @@ function checkUser() {
 
         console.log('resolved');
         data = resolved;
-        document.getElementById('logged-id').innerHTML = userName;
+        document.getElementById('logged-id').innerHTML = ' ' + userName;
         $('#block-login-not-logged').toggleClass('d-none');
         $('#block-login-logged').toggleClass('d-none');
         showNotes(userName);
