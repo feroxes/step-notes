@@ -11,6 +11,35 @@ body {
 
 
 .list-item {
-    height: 200px;
+    max-height: 200px;
     overflow-y: hidden;
+}
+.edit-list-item {
+    list-style-type: none;
+}
+.trash-list{
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+    margin: auto;
+}
+.edit-list{
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+}
+.list-btn{
+    margin-right: 25px;
+}
+.list-btn-red{
+    background-color: #B40404;
+    border-color: #8A0808;
+}
+.list-btn-red:hover{
+    background-color: #FF0000;
+    border-color: #DF0101;
+}
+
+.card {
+    cursor: pointer;
 }
