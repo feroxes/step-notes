@@ -13,11 +13,11 @@ div#modalNoteDetails(class="modal fade")
                     div(class='form-group row note-row')
                         .col-sm-12
                             div Text
-                            //textarea#edit-note-text(cols=40 rows=5 required='' value=NoteObj.text)
-                            input#edit-note-text(type=text required='' value=NoteObj.content.text)
+                            textarea#edit-note-text(cols=40 rows=5 required='') #{NoteObj.content.text}
                     div(class="form-group row")
                         .col-sm-10
-                            div#btn-form-saveNote(class="btn btn-primary") Save note
-                            div#btn-form-delete(class="btn btn-danger") Delete
+                            div#btn-form-saveNote(class="btn btn-primary list-btn") Save note
+                            div#btn-form-cancelNote(class="btn btn-primary list-btn") Cancel
+                            div#btn-form-deleteNote(class="btn btn-danger list-btn") Delete
 
 

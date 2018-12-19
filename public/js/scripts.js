@@ -164,7 +164,7 @@ function putNote() {
 }
 
 function deleteNote() {
-    const deleteBtn = document.getElementById('btn-form-delete');
+    const deleteBtn = document.getElementById('btn-form-deleteNote');
     deleteBtn.addEventListener('click', sacrificeNote);
 
     function sacrificeNote() {
@@ -182,6 +182,10 @@ function deleteNote() {
             showNotes(userName);
         })
     }
+    const cancelBtn = document.getElementById('btn-form-cancelNote');
+    cancelBtn.addEventListener('click', () => {
+        $('#modalNoteDetails').modal('hide');
+    })
 }
 
 
